@@ -4,9 +4,55 @@ The code was modified from https://github.com/VainF/pytorch-msssim.
 Part of the code has been modified to make it faster, takes up less VRAM, and is compatible with pytorch jit.  
 
 # Speed up. Only test on GPU.
+losser1 is https://github.com/lizhengwei1992/MS_SSIM_pytorch/blob/master/loss.py 268fc76  
+losser2 is https://github.com/Po-Hsun-Su/pytorch-ssim/blob/master/pytorch_ssim/__init__.py 881d210  
+losser3 is https://github.com/VainF/pytorch-msssim/blob/master/pytorch_msssim/ssim.py 4f1cee4  
+losser4 is https://github.com/One-sixth/ms_ssim_pytorch/blob/master/ssim.py bfc99fc  
+
 ## SSIM
+test output  
+```
+Performance Testing SSIM
+
+testing losser2
+cuda time 89041.5390625
+perf_counter time 86.8486872
+
+testing losser3
+cuda time 51062.2109375
+perf_counter time 50.9808635
+
+testing losser4
+cuda time 34861.1484375
+perf_counter time 34.066023599999994
+
+```
 
 ## MS-SSIM
+test output  
+```
+Performance Testing MS_SSIM
+
+testing losser1
+cuda time 140149.578125
+perf_counter time 140.040425
+
+testing losser3
+cuda time 92967.7890625
+perf_counter time 92.9019308
+
+testing losser4
+cuda time 55630.640625
+perf_counter time 55.594013200000006
+
+```
+
+## Test speed by yourself
+1. cd ms_ssim_pytorch/_test_speed  
+
+2. python test_ssim_speed.py  
+or  
+2. python test_ms_ssim_speed.py  
 
 # Other thing
 Add parameter use_padding.  
@@ -22,7 +68,7 @@ if you want to test the code. You also need to install some package.
 pip install imageio imageio-ffmpeg opencv-python
 ```
 
-# Test code
+# Test code with animation
 The test code is included in the ssim.py file, you can run the file directly to start the test.  
 
 1. git clone https://github.com/One-sixth/ms_ssim_pytorch  
