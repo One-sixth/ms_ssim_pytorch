@@ -101,18 +101,18 @@ def ms_ssim(X, Y, window, data_range: float, weights, use_padding: bool=False):
     :return:
     '''
     levels = weights.shape[0]
-    mcs = []
+    cs_vals = []
     ssim_vals = []
     for _ in range(levels):
         ssim_val, cs = ssim(X, Y, window=window, data_range=data_range, use_padding=use_padding)
-        mcs.append(cs)
+        cs_vals.append(cs)
         ssim_vals.append(ssim_val)
         padding = (X.shape[2] % 2, X.shape[3] % 2)
         X = F.avg_pool2d(X, kernel_size=2, stride=2, padding=padding)
         Y = F.avg_pool2d(Y, kernel_size=2, stride=2, padding=padding)
 
-    mcs = torch.stack(mcs, dim=0)
-    ms_ssim_val = torch.prod((mcs[:-1] ** weights[:-1].unsqueeze(1)) * (ssim_vals[-1] ** weights[-1]), dim=0)
+    cs_vals = torch.stack(cs_vals, dim=0)
+    ms_ssim_val = torch.prod((cs_vals[:-1] ** weights[:-1].unsqueeze(1)) * (ssim_vals[-1] ** weights[-1]), dim=0)
     return ms_ssim_val
 
 
