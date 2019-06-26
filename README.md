@@ -65,7 +65,7 @@ When the input image is smaller than 176x176, this parameter needs to be set to 
 # Require
 Pytorch >= 1.1  
 
-if you want to test the code. You also need to install some package.  
+if you want to test the code with animation. You also need to install some package.  
 ```
 pip install imageio imageio-ffmpeg opencv-python
 ```
