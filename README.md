@@ -6,44 +6,46 @@ Part of the code has been modified to make it faster, takes up less VRAM, and is
 # Speed up. Only test on GPU.
 losser1 is https://github.com/lizhengwei1992/MS_SSIM_pytorch/blob/master/loss.py 268fc76  
 losser2 is https://github.com/Po-Hsun-Su/pytorch-ssim/blob/master/pytorch_ssim/__init__.py 881d210  
-losser3 is https://github.com/VainF/pytorch-msssim/blob/master/pytorch_msssim/ssim.py 4f1cee4  
+losser3 is https://github.com/VainF/pytorch-msssim/blob/master/pytorch_msssim/ssim.py b47c07c  
 losser4 is https://github.com/One-sixth/ms_ssim_pytorch/blob/master/ssim.py bfc99fc  
 
+My test environment: i7-6700HQ GTX970M-3G  
+
 ## SSIM
-test output  
+Test output  
 ```
 Performance Testing SSIM
 
 testing losser2
-cuda time 89041.5390625
-perf_counter time 86.8486872
+cuda time 89031.171875
+perf_counter time 86.8398724
 
 testing losser3
-cuda time 51062.2109375
-perf_counter time 50.9808635
+cuda time 36263.53515625
+perf_counter time 36.20904700000001
 
 testing losser4
-cuda time 34861.1484375
-perf_counter time 34.066023599999994
+cuda time 34827.99609375
+perf_counter time 34.02753539999998
 
 ```
 
 ## MS-SSIM
-test output  
+Test output  
 ```
 Performance Testing MS_SSIM
 
 testing losser1
-cuda time 140149.578125
-perf_counter time 140.040425
+cuda time 139294.03125
+perf_counter time 139.1857228
 
 testing losser3
-cuda time 92967.7890625
-perf_counter time 92.9019308
+cuda time 61392.5234375
+perf_counter time 61.351400299999995
 
 testing losser4
-cuda time 55630.640625
-perf_counter time 55.594013200000006
+cuda time 52414.109375
+perf_counter time 52.37405780000003
 
 ```
 
