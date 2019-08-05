@@ -28,7 +28,7 @@ def create_window(window_size: int, sigma: float, channel: int):
 
 
 @torch.jit.script
-def _gaussian_filter(x, window_1d, use_padding: bool=False):
+def _gaussian_filter(x, window_1d, use_padding: bool):
     '''
     Blur input with 1-D kernel
     :param x: batch of tensors to be blured
@@ -125,11 +125,12 @@ class SSIM(torch.jit.ScriptModule):
         :param window_sigma: sigma of normal distribution
         :param data_range: value range of input images. (usually 1.0 or 255)
         :param channel: input channels (default: 3)
+        :param use_padding: padding image before conv
         '''
         super().__init__()
         assert window_size % 2 == 1, 'Window size must be odd.'
         window = create_window(window_size, window_sigma, channel)
-        self.window = torch.nn.Parameter(window, requires_grad=False)
+        self.register_buffer('window', window)
         self.data_range = data_range
         self.use_padding = use_padding
 
@@ -159,7 +160,7 @@ class MS_SSIM(torch.jit.ScriptModule):
         self.use_padding = use_padding
 
         window = create_window(window_size, window_sigma, channel)
-        self.window = torch.nn.Parameter(window, requires_grad=False)
+        self.register_buffer('window', window)
 
         if weights is None:
             weights = [0.0448, 0.2856, 0.3001, 0.2363, 0.1333]
@@ -169,7 +170,7 @@ class MS_SSIM(torch.jit.ScriptModule):
             weights = weights[:levels]
             weights = weights / weights.sum()
 
-        self.weights = torch.nn.Parameter(weights, requires_grad=False)
+        self.register_buffer('weights', weights)
 
     @torch.jit.script_method
     def forward(self, X, Y):

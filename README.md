@@ -17,16 +17,16 @@ Test output
 Performance Testing SSIM
 
 testing losser2
-cuda time 89031.171875
-perf_counter time 86.8398724
+cuda time 88990.0703125
+perf_counter time 86.80163019999999
 
 testing losser3
-cuda time 36263.53515625
-perf_counter time 36.20904700000001
+cuda time 36119.06640625
+perf_counter time 36.057978399999996
 
 testing losser4
-cuda time 34827.99609375
-perf_counter time 34.02753539999998
+cuda time 34708.8359375
+perf_counter time 33.916086199999995
 
 ```
 
@@ -36,16 +36,16 @@ Test output
 Performance Testing MS_SSIM
 
 testing losser1
-cuda time 139294.03125
-perf_counter time 139.1857228
+cuda time 134115.96875
+perf_counter time 134.0006031
 
 testing losser3
-cuda time 61392.5234375
-perf_counter time 61.351400299999995
+cuda time 61760.56640625
+perf_counter time 61.71994470000001
 
 testing losser4
-cuda time 52414.109375
-perf_counter time 52.37405780000003
+cuda time 52888.03125
+perf_counter time 52.848280500000016
 
 ```
 
