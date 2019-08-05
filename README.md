@@ -7,7 +7,7 @@ Part of the code has been modified to make it faster, takes up less VRAM, and is
 losser1 is https://github.com/lizhengwei1992/MS_SSIM_pytorch/blob/master/loss.py 268fc76  
 losser2 is https://github.com/Po-Hsun-Su/pytorch-ssim/blob/master/pytorch_ssim/__init__.py 881d210  
 losser3 is https://github.com/VainF/pytorch-msssim/blob/master/pytorch_msssim/ssim.py b47c07c  
-losser4 is https://github.com/One-sixth/ms_ssim_pytorch/blob/master/ssim.py bfc99fc  
+losser4 is https://github.com/One-sixth/ms_ssim_pytorch/blob/master/ssim.py 0f69f16  
 
 My test environment: i7-6700HQ GTX970M-3G  
 
