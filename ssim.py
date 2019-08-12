@@ -9,12 +9,11 @@ import torch.nn.functional as F
 
 
 @torch.jit.script
-def create_window(window_size: int, sigma: float, channel: int):
+def create_window(window_size: int, sigma: float):
     '''
     Create 1-D gauss kernel
     :param window_size: the size of gauss kernel
     :param sigma: sigma of normal distribution
-    :param channel: input channel
     :return: 1D kernel
     '''
     coords = torch.arange(window_size, dtype=torch.float)
@@ -23,7 +22,7 @@ def create_window(window_size: int, sigma: float, channel: int):
     g = torch.exp(-(coords ** 2) / (2 * sigma ** 2))
     g /= g.sum()
 
-    g = g.reshape(1, 1, 1, -1).repeat(channel, 1, 1, 1)
+    g = g.reshape(1, 1, 1, -1)
     return g
 
 
@@ -65,6 +64,10 @@ def ssim(X, Y, window, data_range: float, use_padding: bool=False):
     C1 = (K1 * data_range) ** 2
     C2 = (K2 * data_range) ** 2
 
+    if X.shape[1] != window.shape[0]:
+        # avoid repeat call in ms_ssim
+        window = window.expand(X.shape[1], -1, -1, -1)
+
     mu1 = _gaussian_filter(X, window, use_padding)
     mu2 = _gaussian_filter(Y, window, use_padding)
     sigma1_sq = _gaussian_filter(X * X, window, use_padding)
@@ -103,6 +106,7 @@ def ms_ssim(X, Y, window, data_range: float, weights, use_padding: bool=False):
     levels = weights.shape[0]
     cs_vals = []
     ssim_vals = []
+    window = window.expand(X.shape[1], -1, -1, -1)
     for _ in range(levels):
         ssim_val, cs = ssim(X, Y, window=window, data_range=data_range, use_padding=use_padding)
         cs_vals.append(cs)
@@ -119,17 +123,16 @@ def ms_ssim(X, Y, window, data_range: float, weights, use_padding: bool=False):
 class SSIM(torch.jit.ScriptModule):
     __constants__ = ['data_range', 'use_padding']
 
-    def __init__(self, window_size=11, window_sigma=1.5, data_range=255., channel=3, use_padding=False):
+    def __init__(self, window_size=11, window_sigma=1.5, data_range=255., use_padding=False):
         '''
         :param window_size: the size of gauss kernel
         :param window_sigma: sigma of normal distribution
         :param data_range: value range of input images. (usually 1.0 or 255)
-        :param channel: input channels (default: 3)
         :param use_padding: padding image before conv
         '''
         super().__init__()
         assert window_size % 2 == 1, 'Window size must be odd.'
-        window = create_window(window_size, window_sigma, channel)
+        window = create_window(window_size, window_sigma)
         self.register_buffer('window', window)
         self.data_range = data_range
         self.use_padding = use_padding
@@ -143,13 +146,12 @@ class SSIM(torch.jit.ScriptModule):
 class MS_SSIM(torch.jit.ScriptModule):
     __constants__ = ['data_range', 'use_padding']
 
-    def __init__(self, window_size=11, window_sigma=1.5, data_range=255., channel=3, use_padding=False, weights=None, levels=None):
+    def __init__(self, window_size=11, window_sigma=1.5, data_range=255., use_padding=False, weights=None, levels=None):
         '''
         class for ms-ssim
         :param window_size: the size of gauss kernel
         :param window_sigma: sigma of normal distribution
         :param data_range: value range of input images. (usually 1.0 or 255)
-        :param channel: input channels
         :param use_padding: padding image before conv
         :param weights: weights for different levels. (default [0.0448, 0.2856, 0.3001, 0.2363, 0.1333])
         :param levels: number of downsampling
@@ -159,7 +161,7 @@ class MS_SSIM(torch.jit.ScriptModule):
         self.data_range = data_range
         self.use_padding = use_padding
 
-        window = create_window(window_size, window_sigma, channel)
+        window = create_window(window_size, window_sigma)
         self.register_buffer('window', window)
 
         if weights is None:
@@ -226,7 +228,7 @@ if __name__ == '__main__':
     rand_im = torch.randint_like(t_im, 0, 255, dtype=torch.float32) / 255.
     rand_im.requires_grad = True
     optim = torch.optim.Adam([rand_im], 0.003, eps=1e-8)
-    losser = SSIM(data_range=1., channel=t_im.shape[1]).cuda()
+    losser = SSIM(data_range=1.).cuda()
     ssim_score = 0
     while ssim_score < 0.999:
         optim.zero_grad()
@@ -270,7 +272,7 @@ if __name__ == '__main__':
     rand_im = torch.randint_like(t_im, 0, 255, dtype=torch.float32) / 255.
     rand_im.requires_grad = True
     optim = torch.optim.Adam([rand_im], 0.003, eps=1e-8)
-    losser = MS_SSIM(data_range=1., channel=t_im.shape[1]).cuda()
+    losser = MS_SSIM(data_range=1.).cuda()
     ssim_score = 0
     while ssim_score < 0.999:
         optim.zero_grad()

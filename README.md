@@ -21,16 +21,16 @@ pytorch 1.2
 Performance Testing SSIM
 
 testing losser2
-cuda time 89290.7734375
-perf_counter time 87.1042247
+cuda time 88978.5390625
+perf_counter time 86.7912251
 
 testing losser3
-cuda time 36153.64453125
-perf_counter time 36.09167939999999
+cuda time 36165.6640625
+perf_counter time 36.103866
 
 testing losser4
-cuda time 31085.455078125
-perf_counter time 29.80807200000001
+cuda time 31052.384765625
+perf_counter time 30.134942200000012
 
 ```
 
@@ -39,16 +39,16 @@ pytorch 1.1
 Performance Testing SSIM
 
 testing losser2
-cuda time 88990.0703125
-perf_counter time 86.80163019999999
+cuda time 88976.3203125
+perf_counter time 86.79177510000001
 
 testing losser3
-cuda time 36119.06640625
-perf_counter time 36.057978399999996
+cuda time 36157.3203125
+perf_counter time 36.096230100000014
 
 testing losser4
-cuda time 34708.8359375
-perf_counter time 33.916086199999995
+cuda time 35632.9140625
+perf_counter time 34.966091500000005
 
 ```
 
@@ -60,16 +60,16 @@ pytorch 1.2
 Performance Testing MS_SSIM
 
 testing losser1
-cuda time 134158.84375
-perf_counter time 134.0433756
+cuda time 134059.5
+perf_counter time 133.94344470000001
 
 testing losser3
-cuda time 62143.4140625
-perf_counter time 62.103911400000015
+cuda time 63151.3203125
+perf_counter time 63.109972
 
 testing losser4
-cuda time 46854.25390625
-perf_counter time 46.81785239999999
+cuda time 49190.26171875
+perf_counter time 49.15350409999999
 
 ```
 
@@ -78,16 +78,16 @@ pytorch 1.1
 Performance Testing MS_SSIM
 
 testing losser1
-cuda time 134115.96875
-perf_counter time 134.0006031
+cuda time 134462.515625
+perf_counter time 134.3518838
 
 testing losser3
-cuda time 61760.56640625
-perf_counter time 61.71994470000001
+cuda time 62653.0546875
+perf_counter time 62.61409040000001
 
 testing losser4
-cuda time 52888.03125
-perf_counter time 52.848280500000016
+cuda time 55489.34375
+perf_counter time 55.450284599999975
 
 ```
 
@@ -129,10 +129,10 @@ im = torch.randint(0, 255, (5, 3, 256, 256), dtype=torch.float, device='cuda')
 img1 = im / 255
 img2 = img1 * 0.5
 
-losser = ssim.SSIM(data_range=1., channel=3).cuda()
+losser = ssim.SSIM(data_range=1.).cuda()
 loss = losser(img1, img2).mean()
 
-losser2 = ssim.MS_SSIM(data_range=1., channel=3).cuda()
+losser2 = ssim.MS_SSIM(data_range=1.).cuda()
 loss2 = losser2(img1, img2).mean()
 
 print(loss.item())

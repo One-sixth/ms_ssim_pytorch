@@ -36,7 +36,7 @@ if __name__ == '__main__':
     import time
     losser2 = SSIM2(window_size=11, size_average=False).cuda()
     losser3 = SSIM3(win_size=11, win_sigma=1.5, data_range=1., size_average=False, channel=3).cuda()
-    losser4 = SSIM4(window_size=11, window_sigma=1.5, data_range=1., channel=3, use_padding=False).cuda()
+    losser4 = SSIM4(window_size=11, window_sigma=1.5, data_range=1., use_padding=False).cuda()
 
     print('testing losser2')
     test_speed(losser2)
