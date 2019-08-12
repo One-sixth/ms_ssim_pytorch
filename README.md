@@ -3,6 +3,9 @@
 The code was modified from https://github.com/VainF/pytorch-msssim.  
 Part of the code has been modified to make it faster, takes up less VRAM, and is compatible with pytorch jit.  
 
+The dynamic channel version can found here https://github.com/One-sixth/ms_ssim_pytorch/tree/dynamic_channel_num.  
+More convenient to use but has a little performance loss.  
+
 ## Great speed up in pytorch 1.2. It is strongly recommended to update to pytorch 1.2 !
 
 # Speed up. Only test on GPU.
