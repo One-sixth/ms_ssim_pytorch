@@ -3,6 +3,8 @@
 The code was modified from https://github.com/VainF/pytorch-msssim.  
 Part of the code has been modified to make it faster, takes up less VRAM, and is compatible with pytorch jit.  
 
+## Great speed up in pytorch 1.2. It is strongly recommended to update to pytorch 1.2 !
+
 # Speed up. Only test on GPU.
 losser1 is https://github.com/lizhengwei1992/MS_SSIM_pytorch/blob/master/loss.py 268fc76  
 losser2 is https://github.com/Po-Hsun-Su/pytorch-ssim/blob/master/pytorch_ssim/__init__.py 881d210  
@@ -13,6 +15,26 @@ My test environment: i7-6700HQ GTX970M-3G
 
 ## SSIM
 Test output  
+
+pytorch 1.2  
+```
+Performance Testing SSIM
+
+testing losser2
+cuda time 89290.7734375
+perf_counter time 87.1042247
+
+testing losser3
+cuda time 36153.64453125
+perf_counter time 36.09167939999999
+
+testing losser4
+cuda time 31085.455078125
+perf_counter time 29.80807200000001
+
+```
+
+pytorch 1.1  
 ```
 Performance Testing SSIM
 
@@ -32,6 +54,26 @@ perf_counter time 33.916086199999995
 
 ## MS-SSIM
 Test output  
+
+pytorch 1.2  
+```
+Performance Testing MS_SSIM
+
+testing losser1
+cuda time 134158.84375
+perf_counter time 134.0433756
+
+testing losser3
+cuda time 62143.4140625
+perf_counter time 62.103911400000015
+
+testing losser4
+cuda time 46854.25390625
+perf_counter time 46.81785239999999
+
+```
+
+pytorch 1.1  
 ```
 Performance Testing MS_SSIM
 
