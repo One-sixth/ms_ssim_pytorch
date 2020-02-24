@@ -80,6 +80,8 @@ def ssim(X, Y, window, data_range: float, use_padding: bool=False):
     sigma12 = compensation * (sigma12 - mu1_mu2)
 
     cs_map = (2 * sigma12 + C2) / (sigma1_sq + sigma2_sq + C2)
+    # Fixed the issue that the negative value of cs_map caused ms_ssim to output Nan.
+    cs_map = cs_map.clamp_min(0.)
     ssim_map = ((2 * mu1_mu2 + C1) / (mu1_sq + mu2_sq + C1)) * cs_map
 
     ssim_val = ssim_map.mean(dim=(1, 2, 3))  # reduce along CHW
