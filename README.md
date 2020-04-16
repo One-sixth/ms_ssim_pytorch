@@ -6,6 +6,8 @@ Part of the code has been modified to make it faster, takes up less VRAM, and is
 The dynamic channel version can found here https://github.com/One-sixth/ms_ssim_pytorch/tree/dynamic_channel_num.  
 More convenient to use but has a little performance loss.  
 
+Thanks [vegetable09](https://github.com/vegetable09) for finding and fixing a bug that causes gradient nan when ms_ssim backward. [#3](https://github.com/One-sixth/ms_ssim_pytorch/issues/3)
+
 ## Great speed up in pytorch 1.2. It is strongly recommended to update to pytorch 1.2 !
 
 # Speed up. Only test on GPU.
