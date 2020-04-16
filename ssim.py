@@ -100,6 +100,7 @@ def ms_ssim(X, Y, window, data_range: float, weights, use_padding: bool=False, e
     :param data_range: value range of input images. (usually 1.0 or 255)
     :param weights: weights for different levels
     :param use_padding: padding image before conv
+    :param eps: use for avoid grad nan.
     :return:
     '''
     levels = weights.shape[0]
