@@ -94,7 +94,7 @@ def ssim(X, Y, window, data_range: float, use_padding: bool=False):
 
 
 @torch.jit.script
-def ms_ssim(X, Y, window, data_range: float, weights, use_padding: bool=False):
+def ms_ssim(X, Y, window, data_range: float, weights, use_padding: bool=False, eps: float=1e-8):
     '''
     interface of ms-ssim
     :param X: a batch of images, (N,C,H,W)
@@ -103,6 +103,7 @@ def ms_ssim(X, Y, window, data_range: float, weights, use_padding: bool=False):
     :param data_range: value range of input images. (usually 1.0 or 255)
     :param weights: weights for different levels
     :param use_padding: padding image before conv
+    :param eps: use for avoid grad nan.
     :return:
     '''
     levels = weights.shape[0]
@@ -111,7 +112,11 @@ def ms_ssim(X, Y, window, data_range: float, weights, use_padding: bool=False):
     window = window.expand(X.shape[1], -1, -1, -1)
     for _ in range(levels):
         ssim_val, cs = ssim(X, Y, window=window, data_range=data_range, use_padding=use_padding)
+        # Use for fix a issue. When c = a ** b and a is 0, c.backward() will cause the a.grad become inf.
+        ssim_val = ssim_val.clamp_min(eps)
+        cs = cs.clamp_min(eps)
         cs_vals.append(cs)
+
         ssim_vals.append(ssim_val)
         padding = (X.shape[2] % 2, X.shape[3] % 2)
         X = F.avg_pool2d(X, kernel_size=2, stride=2, padding=padding)
@@ -146,9 +151,9 @@ class SSIM(torch.jit.ScriptModule):
 
 
 class MS_SSIM(torch.jit.ScriptModule):
-    __constants__ = ['data_range', 'use_padding']
+    __constants__ = ['data_range', 'use_padding', 'eps']
 
-    def __init__(self, window_size=11, window_sigma=1.5, data_range=255., use_padding=False, weights=None, levels=None):
+    def __init__(self, window_size=11, window_sigma=1.5, data_range=255., use_padding=False, weights=None, levels=None, eps=1e-8):
         '''
         class for ms-ssim
         :param window_size: the size of gauss kernel
@@ -157,11 +162,13 @@ class MS_SSIM(torch.jit.ScriptModule):
         :param use_padding: padding image before conv
         :param weights: weights for different levels. (default [0.0448, 0.2856, 0.3001, 0.2363, 0.1333])
         :param levels: number of downsampling
+        :param eps: Use for fix a issue. When c = a ** b and a is 0, c.backward() will cause the a.grad become inf.
         '''
         super().__init__()
         assert window_size % 2 == 1, 'Window size must be odd.'
         self.data_range = data_range
         self.use_padding = use_padding
+        self.eps = eps
 
         window = create_window(window_size, window_sigma)
         self.register_buffer('window', window)
@@ -179,7 +186,7 @@ class MS_SSIM(torch.jit.ScriptModule):
     @torch.jit.script_method
     def forward(self, X, Y):
         return ms_ssim(X, Y, window=self.window, data_range=self.data_range, weights=self.weights,
-                       use_padding=self.use_padding)
+                       use_padding=self.use_padding, eps=self.eps)
 
 
 if __name__ == '__main__':
