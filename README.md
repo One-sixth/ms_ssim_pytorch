@@ -6,7 +6,9 @@ Part of the code has been modified to make it faster, takes up less VRAM, and is
 The dynamic channel version can found here https://github.com/One-sixth/ms_ssim_pytorch/tree/dynamic_channel_num.  
 More convenient to use but has a little performance loss.  
 
-Thanks [vegetable09](https://github.com/vegetable09) for finding and fixing a bug that causes gradient nan when ms_ssim backward. [#3](https://github.com/One-sixth/ms_ssim_pytorch/issues/3)
+Thanks [vegetable09](https://github.com/vegetable09) for finding and fixing a bug that causes gradient nan when ms_ssim backward. [#3](https://github.com/One-sixth/ms_ssim_pytorch/issues/3)  
+
+If you are using pytorch 1.2, please be careful not to create and destroy this jit module in the training loop (other jit modules may also have this situation), there may be memory leaks. I have tested that pytorch 1.6 does not have this problem. [#4](https://github.com/One-sixth/ms_ssim_pytorch/issues/4)  
 
 ## Great speed up in pytorch 1.2. It is strongly recommended to update to pytorch 1.2 !
 
