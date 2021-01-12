@@ -5,6 +5,7 @@ sys.path.append('../')
 from no1_ms_ssim_lizhengwei1992_MS_SSIM_pytorch import MS_SSIM as MS_SSIM1
 from no3_ssim_VainF_pytorch_msssim import MS_SSIM as MS_SSIM3
 from ssim import MS_SSIM as MS_SSIM4
+from no5_pipa_ssim import MSSSIM as MS_SSIM5
 
 
 def test_speed(losser):
@@ -37,6 +38,7 @@ if __name__ == '__main__':
     losser1 = MS_SSIM1(size_average=False, max_val=1.).cuda()
     losser3 = MS_SSIM3(win_size=11, win_sigma=1.5, data_range=1., size_average=False, channel=3).cuda()
     losser4 = MS_SSIM4(window_size=11, window_sigma=1.5, data_range=1., channel=3, use_padding=False).cuda()
+    losser5 = MS_SSIM5(window_size=11, value_range=1., n_channels=3, reduction='none').cuda()
 
     print('testing losser1')
     test_speed(losser1)
@@ -48,4 +50,8 @@ if __name__ == '__main__':
 
     print('testing losser4')
     test_speed(losser4)
+    print()
+
+    print('testing losser5')
+    test_speed(losser5)
     print()

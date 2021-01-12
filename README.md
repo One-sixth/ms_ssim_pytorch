@@ -8,9 +8,7 @@ More convenient to use but has a little performance loss.
 
 Thanks [vegetable09](https://github.com/vegetable09) for finding and fixing a bug that causes gradient nan when ms_ssim backward. [#3](https://github.com/One-sixth/ms_ssim_pytorch/issues/3)  
 
-If you are using pytorch 1.2, please be careful not to create and destroy this jit module in the training loop (other jit modules may also have this situation), there may be memory leaks. I have tested that pytorch 1.6 does not have this problem. [#4](https://github.com/One-sixth/ms_ssim_pytorch/issues/4)  
-
-## Great speed up in pytorch 1.2. It is strongly recommended to update to pytorch 1.2 !
+If you are using pytorch 1.2, please be careful not to create and destroy this jit module in the training loop (other jit modules may also have this situation), there may be memory leaks. I have tested that pytorch 1.6 does not have this problem. [#4](https://github.com/One-sixth/ms_ssim_pytorch/issues/4)
 
 # Speed up. Only test on GPU.
 losser1 is https://github.com/lizhengwei1992/MS_SSIM_pytorch/blob/master/loss.py 268fc76  
@@ -18,10 +16,33 @@ losser2 is https://github.com/Po-Hsun-Su/pytorch-ssim/blob/master/pytorch_ssim/_
 losser3 is https://github.com/VainF/pytorch-msssim/blob/master/pytorch_msssim/ssim.py b47c07c  
 losser4 is https://github.com/One-sixth/ms_ssim_pytorch/blob/master/ssim.py 0f69f16  
 
+In pytorch 1.1 1.2  
 My test environment: i7-6700HQ GTX970M-3G  
 
 ## SSIM
 Test output  
+
+pytorch 1.7.1  
+```
+Performance Testing SSIM
+
+testing losser2
+cuda time 40721.16796875
+perf_counter time 36.6222991
+
+testing losser3
+cuda time 17215.404296875
+perf_counter time 17.1855524
+
+testing losser4
+cuda time 14191.6328125
+perf_counter time 11.753846000000003
+
+testing losser5
+cuda time 39380.390625
+perf_counter time 35.5724254
+
+```
 
 pytorch 1.2  
 ```
@@ -61,6 +82,28 @@ perf_counter time 33.916086199999995
 
 ## MS-SSIM
 Test output  
+
+pytorch 1.7.1  
+```
+Performance Testing MS_SSIM
+
+testing losser1
+cuda time 58361.2265625
+perf_counter time 58.3090031
+
+testing losser3
+cuda time 26812.125
+perf_counter time 26.7919251
+
+testing losser4
+cuda time 25492.28125
+perf_counter time 25.485101200000003
+
+testing losser5
+cuda time 52880.6015625
+perf_counter time 52.83433840000001
+
+```
 
 pytorch 1.2  
 ```
