@@ -13,7 +13,7 @@ If you are using pytorch 1.2, please be careful not to create and destroy this j
 # Speed up. Only test on GPU.
 losser1 is https://github.com/lizhengwei1992/MS_SSIM_pytorch/blob/master/loss.py 268fc76  
 losser2 is https://github.com/Po-Hsun-Su/pytorch-ssim/blob/master/pytorch_ssim/__init__.py 881d210  
-losser3 is https://github.com/VainF/pytorch-msssim/blob/master/pytorch_msssim/ssim.py b47c07c  
+losser3 is https://github.com/VainF/pytorch-msssim/blob/master/pytorch_msssim/ssim.py 5caf547  
 losser4 is https://github.com/One-sixth/ms_ssim_pytorch/blob/master/ssim.py 0f69f16  
 losser5 is https://github.com/francois-rozet/piqa/blob/master/piqa/ssim.py 539fc35  
            https://github.com/francois-rozet/piqa/blob/master/piqa/utils.py 0b5a85e  
@@ -32,20 +32,20 @@ pytorch 1.7.1
 Performance Testing SSIM
 
 testing losser2
-cuda time 40721.16796875
-perf_counter time 36.6222991
+cuda time 40294.46484375
+perf_counter time 36.219510799999995
 
 testing losser3
-cuda time 17215.404296875
-perf_counter time 17.1855524
+cuda time 17104.595703125
+perf_counter time 17.076500100000004
 
 testing losser4
-cuda time 14191.6328125
-perf_counter time 11.753846000000003
+cuda time 14311.0712890625
+perf_counter time 11.878211299999997
 
 testing losser5
-cuda time 39380.390625
-perf_counter time 35.5724254
+cuda time 39297.91015625
+perf_counter time 35.492968899999994
 
 ```
 
@@ -93,20 +93,20 @@ pytorch 1.7.1
 Performance Testing MS_SSIM
 
 testing losser1
-cuda time 58361.2265625
-perf_counter time 58.3090031
+cuda time 59640.73828125
+perf_counter time 59.589680900000005
 
 testing losser3
-cuda time 26812.125
-perf_counter time 26.7919251
+cuda time 26586.98828125
+perf_counter time 26.567180399999998
 
 testing losser4
-cuda time 25492.28125
-perf_counter time 25.485101200000003
+cuda time 25322.30078125
+perf_counter time 25.314330999999996
 
 testing losser5
-cuda time 52880.6015625
-perf_counter time 52.83433840000001
+cuda time 52676.359375
+perf_counter time 52.629834900000006
 
 ```
 
