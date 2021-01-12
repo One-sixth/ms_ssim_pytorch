@@ -15,6 +15,11 @@ losser1 is https://github.com/lizhengwei1992/MS_SSIM_pytorch/blob/master/loss.py
 losser2 is https://github.com/Po-Hsun-Su/pytorch-ssim/blob/master/pytorch_ssim/__init__.py 881d210  
 losser3 is https://github.com/VainF/pytorch-msssim/blob/master/pytorch_msssim/ssim.py b47c07c  
 losser4 is https://github.com/One-sixth/ms_ssim_pytorch/blob/master/ssim.py 0f69f16  
+losser5 is https://github.com/francois-rozet/piqa/blob/master/piqa/ssim.py 539fc35  
+           https://github.com/francois-rozet/piqa/blob/master/piqa/utils.py 0b5a85e  
+
+In pytorch 1.7.1  
+My test environment: i7-8750HQ GTX1070-8G  
 
 In pytorch 1.1 1.2  
 My test environment: i7-6700HQ GTX970M-3G  

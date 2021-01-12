@@ -5,7 +5,7 @@ sys.path.append('../')
 from no2_ssim_Po_Hsun_Su_pytorch_ssim import SSIM as SSIM2
 from no3_ssim_VainF_pytorch_msssim import SSIM as SSIM3
 from ssim import SSIM as SSIM4
-from no5_pipa_ssim import SSIM as SSIM5
+from no5_ssim_francois_rozet_piqa import SSIM as SSIM5
 
 
 def test_speed(losser):
