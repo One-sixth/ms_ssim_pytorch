@@ -19,7 +19,7 @@ losser5 is https://github.com/francois-rozet/piqa/blob/master/piqa/ssim.py 539fc
            https://github.com/francois-rozet/piqa/blob/master/piqa/utils.py 0b5a85e  
 
 In pytorch 1.7.1  
-My test environment: i7-8750HQ GTX1070-8G  
+My test environment: i7-8750H GTX1070-8G  
 
 In pytorch 1.1 1.2  
 My test environment: i7-6700HQ GTX970M-3G  
