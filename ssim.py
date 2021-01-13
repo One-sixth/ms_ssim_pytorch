@@ -81,7 +81,7 @@ def ssim(X, Y, window, data_range: float, use_padding: bool=False):
 
     cs_map = (2 * sigma12 + C2) / (sigma1_sq + sigma2_sq + C2)
     # Fixed the issue that the negative value of cs_map caused ms_ssim to output Nan.
-    cs_map = cs_map.clamp_min(0.)
+    cs_map = F.relu(cs_map)
     ssim_map = ((2 * mu1_mu2 + C1) / (mu1_sq + mu2_sq + C1)) * cs_map
 
     ssim_val = ssim_map.mean(dim=(1, 2, 3))  # reduce along CHW
@@ -103,23 +103,28 @@ def ms_ssim(X, Y, window, data_range: float, weights, use_padding: bool=False, e
     :param eps: use for avoid grad nan.
     :return:
     '''
+    weights = weights[:, None]
+
     levels = weights.shape[0]
-    cs_vals = []
-    ssim_vals = []
-    for _ in range(levels):
-        ssim_val, cs = ssim(X, Y, window=window, data_range=data_range, use_padding=use_padding)
-        # Use for fix a issue. When c = a ** b and a is 0, c.backward() will cause the a.grad become inf.
-        ssim_val = ssim_val.clamp_min(eps)
-        cs = cs.clamp_min(eps)
-        cs_vals.append(cs)
+    vals = []
+    for i in range(levels):
+        ss, cs = ssim(X, Y, window=window, data_range=data_range, use_padding=use_padding)
 
-        ssim_vals.append(ssim_val)
-        padding = (X.shape[2] % 2, X.shape[3] % 2)
-        X = F.avg_pool2d(X, kernel_size=2, stride=2, padding=padding)
-        Y = F.avg_pool2d(Y, kernel_size=2, stride=2, padding=padding)
+        if i < levels-1:
+            vals.append(cs)
+            X = F.avg_pool2d(X, kernel_size=2, stride=2, ceil_mode=True)
+            Y = F.avg_pool2d(Y, kernel_size=2, stride=2, ceil_mode=True)
+        else:
+            vals.append(ss)
 
-    cs_vals = torch.stack(cs_vals, dim=0)
-    ms_ssim_val = torch.prod((cs_vals[:-1] ** weights[:-1].unsqueeze(1)) * (ssim_vals[-1] ** weights[-1]), dim=0)
+    vals = torch.stack(vals, dim=0)
+    # Use for fix a issue. When c = a ** b and a is 0, c.backward() will cause the a.grad become inf.
+    vals = vals.clamp_min(eps)
+    # The origin ms-ssim op.
+    ms_ssim_val = torch.prod(vals[:-1] ** weights[:-1] * vals[-1:] ** weights[-1:], dim=0)
+    # The new ms-ssim op. But I don't know which is best.
+    # ms_ssim_val = torch.prod(vals ** weights, dim=0)
+    # In this file's image training demo. I feel the old ms-ssim more better. So I keep use old ms-ssim op.
     return ms_ssim_val
 
 
