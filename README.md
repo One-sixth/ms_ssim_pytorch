@@ -15,8 +15,8 @@ losser1 is https://github.com/lizhengwei1992/MS_SSIM_pytorch/blob/master/loss.py
 losser2 is https://github.com/Po-Hsun-Su/pytorch-ssim/blob/master/pytorch_ssim/__init__.py 881d210  
 losser3 is https://github.com/VainF/pytorch-msssim/blob/master/pytorch_msssim/ssim.py 5caf547  
 losser4 is https://github.com/One-sixth/ms_ssim_pytorch/blob/master/ssim.py 0f69f16  
-losser5 is https://github.com/francois-rozet/piqa/blob/master/piqa/ssim.py 539fc35  
-           https://github.com/francois-rozet/piqa/blob/master/piqa/utils.py 0b5a85e  
+losser5 is https://github.com/francois-rozet/piqa/blob/master/piqa/ssim.py abaf398  
+           https://github.com/francois-rozet/piqa/blob/master/piqa/utils.py abaf398  
 
 In pytorch 1.7.1  
 My test environment: i7-8750H GTX1070-8G  
@@ -32,20 +32,20 @@ pytorch 1.7.1
 Performance Testing SSIM
 
 testing losser2
-cuda time 40294.46484375
-perf_counter time 36.219510799999995
+cuda time 40159.54296875
+perf_counter time 36.0850592
 
 testing losser3
-cuda time 17104.595703125
-perf_counter time 17.076500100000004
+cuda time 16879.08984375
+perf_counter time 16.850292999999994
 
 testing losser4
-cuda time 14311.0712890625
-perf_counter time 11.878211299999997
+cuda time 14125.35546875
+perf_counter time 11.690681600000005
 
 testing losser5
-cuda time 39297.91015625
-perf_counter time 35.492968899999994
+cuda time 13211.6025390625
+perf_counter time 11.138008799999994
 
 ```
 
@@ -93,20 +93,20 @@ pytorch 1.7.1
 Performance Testing MS_SSIM
 
 testing losser1
-cuda time 59640.73828125
-perf_counter time 59.589680900000005
+cuda time 60187.13671875
+perf_counter time 60.1332872
 
 testing losser3
-cuda time 26586.98828125
-perf_counter time 26.567180399999998
+cuda time 26243.57421875
+perf_counter time 26.224215799999996
 
 testing losser4
-cuda time 25322.30078125
-perf_counter time 25.314330999999996
+cuda time 25420.3984375
+perf_counter time 25.41269039999999
 
 testing losser5
-cuda time 52676.359375
-perf_counter time 52.629834900000006
+cuda time 23683.64453125
+perf_counter time 23.673652900000008
 
 ```
 
