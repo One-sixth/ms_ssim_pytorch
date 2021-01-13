@@ -10,11 +10,13 @@ Thanks [vegetable09](https://github.com/vegetable09) for finding and fixing a bu
 
 If you are using pytorch 1.2, please be careful not to create and destroy this jit module in the training loop (other jit modules may also have this situation), there may be memory leaks. I have tested that pytorch 1.6 does not have this problem. [#4](https://github.com/One-sixth/ms_ssim_pytorch/issues/4)
 
+I study to the ssim.py of the library [piqa](https://github.com/francois-rozet/piqa), which makes my implementation of ssim and ms-ssim a little faster than before.  
+
 # Speed up. Only test on GPU.
 losser1 is https://github.com/lizhengwei1992/MS_SSIM_pytorch/blob/master/loss.py 268fc76  
 losser2 is https://github.com/Po-Hsun-Su/pytorch-ssim/blob/master/pytorch_ssim/__init__.py 881d210  
 losser3 is https://github.com/VainF/pytorch-msssim/blob/master/pytorch_msssim/ssim.py 5caf547  
-losser4 is https://github.com/One-sixth/ms_ssim_pytorch/blob/master/ssim.py 0f69f16  
+losser4 is https://github.com/One-sixth/ms_ssim_pytorch/blob/master/ssim.py 1c2f14a  
 losser5 is https://github.com/francois-rozet/piqa/blob/master/piqa/ssim.py abaf398  
            https://github.com/francois-rozet/piqa/blob/master/piqa/utils.py abaf398  
 
@@ -32,20 +34,20 @@ pytorch 1.7.1
 Performance Testing SSIM
 
 testing losser2
-cuda time 40159.54296875
-perf_counter time 36.0850592
+cuda time 39963.15625
+perf_counter time 35.9110169
 
 testing losser3
-cuda time 16879.08984375
-perf_counter time 16.850292999999994
+cuda time 17141.841796875
+perf_counter time 17.124456199999997
 
 testing losser4
-cuda time 14125.35546875
-perf_counter time 11.690681600000005
+cuda time 13205.0322265625
+perf_counter time 10.477991699999997
 
 testing losser5
-cuda time 13211.6025390625
-perf_counter time 11.138008799999994
+cuda time 13142.8232421875
+perf_counter time 11.079514100000011
 
 ```
 
@@ -93,20 +95,20 @@ pytorch 1.7.1
 Performance Testing MS_SSIM
 
 testing losser1
-cuda time 60187.13671875
-perf_counter time 60.1332872
+cuda time 60403.59765625
+perf_counter time 60.351266200000005
 
 testing losser3
-cuda time 26243.57421875
-perf_counter time 26.224215799999996
+cuda time 26321.48828125
+perf_counter time 26.30165939999999
 
 testing losser4
-cuda time 25420.3984375
-perf_counter time 25.41269039999999
+cuda time 24471.6875
+perf_counter time 24.45189119999999
 
 testing losser5
-cuda time 23683.64453125
-perf_counter time 23.673652900000008
+cuda time 23153.962890625
+perf_counter time 23.135575399999993
 
 ```
 
@@ -210,3 +212,4 @@ MS-SSIM
 https://github.com/VainF/pytorch-msssim  
 https://github.com/Po-Hsun-Su/pytorch-ssim  
 https://github.com/lizhengwei1992/MS_SSIM_pytorch  
+https://github.com/francois-rozet/piqa
